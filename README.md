@@ -1,12 +1,5 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Sr4G1tzW)
-# Project Details
+# Vue 3 + Vite
 
-Hello students!
+This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
 
-For detailed instructions and requirements for this Hackathon, please click the link below:
-
-[Details](https://gvsu-cis658.github.io/projects/hackathon.html)
-
-Please read all instructions carefully before starting your work. If you have any questions, feel free to ask.
-
-Happy coding!
+Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
