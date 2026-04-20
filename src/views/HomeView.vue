@@ -31,6 +31,7 @@ async function search() {
     }
   } catch (err) {
     error.value = 'Search failed. Please try again.'
+    console.error(err)
   } finally {
     loading.value = false
   }
@@ -45,6 +46,7 @@ async function selectStock(stock) {
     quote.value = await getStockQuote(stock.symbol)
   } catch (err) {
     error.value = 'Could not load stock quote.'
+    console.error(err)
   } finally {
     loading.value = false
   }
@@ -52,6 +54,7 @@ async function selectStock(stock) {
 
 function add() {
   if (!selected.value) return
+
   store.addStock({
     symbol: selected.value.symbol,
     description: selected.value.description
@@ -61,6 +64,12 @@ function add() {
 function formatTime(ts) {
   if (!ts) return 'N/A'
   return new Date(ts * 1000).toLocaleString()
+}
+
+function getChangeClass(value) {
+  if (value > 0) return 'positive'
+  if (value < 0) return 'negative'
+  return ''
 }
 </script>
 
@@ -86,16 +95,22 @@ function formatTime(ts) {
 
     <div v-if="quote && selected" class="card">
       <h2>{{ selected.symbol }} - {{ selected.description }}</h2>
-      <p><strong>Current Price:</strong> {{ quote.c }}</p>
-      <p><strong>Change:</strong> {{ quote.d }}</p>
-      <p><strong>Percent Change:</strong> {{ quote.dp }}%</p>
+      <p :class="getChangeClass(quote.d)">
+        <strong>Current Price:</strong> {{ quote.c }}
+      </p>
+      <p :class="getChangeClass(quote.d)">
+        <strong>Change:</strong> {{ quote.d }}
+      </p>
+      <p :class="getChangeClass(quote.dp)">
+        <strong>Percent Change:</strong> {{ quote.dp }}%
+      </p>
       <p><strong>High:</strong> {{ quote.h }}</p>
       <p><strong>Low:</strong> {{ quote.l }}</p>
       <p><strong>Open:</strong> {{ quote.o }}</p>
       <p><strong>Previous Close:</strong> {{ quote.pc }}</p>
       <p><strong>Last Updated:</strong> {{ formatTime(quote.t) }}</p>
 
-      <button @click="add">Add to Watchlist</button>
+      <button @click="add" class="add-btn">Add to Watchlist</button>
     </div>
   </div>
 </template>
@@ -126,7 +141,7 @@ h1 {
 
 .search-box button,
 .result-btn,
-.card button {
+.add-btn {
   padding: 10px 16px;
   cursor: pointer;
 }
@@ -150,11 +165,22 @@ h1 {
   margin-top: 24px;
   padding: 20px;
   border: 1px solid #ccc;
-  border-radius: 10px;
+  border-radius: 12px;
   background: #fafafa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .error {
   color: red;
+}
+
+.positive {
+  color: green;
+  font-weight: bold;
+}
+
+.negative {
+  color: red;
+  font-weight: bold;
 }
 </style>
